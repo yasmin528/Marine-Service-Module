@@ -1,0 +1,66 @@
+<div id="add-plan-modal" class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4">
+
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-lg m-4 flex flex-col">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="text-xl font-bold">Add Seafarer to Plan</h3>
+      <button id="close-plan-form" class="p-2 rounded-full hover:bg-gray-200" (click)="close()"> 
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="flex-1 p-6 overflow-y-auto custom-scrollbar">
+      <form id="add-plan-form" class="space-y-4">
+        <div>
+          <label for="plan-seafarer" class="block text-sm font-medium text-gray-700">Seafarer</label>
+          <select id="plan-seafarer" name="seafarer"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required="">
+            <option value="">Select a seafarer...</option>
+            <option value="SF001">John Doe (Captain)</option>
+            <option value="SF002">Alex Ray (Chief Engineer)</option>
+            <option value="SF003">Chris Smith (First Mate)</option>
+            <option value="SF004">Ben Carter (Cook)</option>
+            <option value="SF005">David Chen (Oiler)</option>
+          </select>
+        </div>
+        <div>
+          <label for="plan-vessel" class="block text-sm font-medium text-gray-700">Vessel</label>
+          <select id="plan-vessel" name="vessel"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required="">
+            <option value="">Select a vessel...</option>
+            <option value="50 LET OKTYABRYA">50 LET OKTYABRYA</option>
+            <option value="MV Voyager">MV Voyager</option>
+            <option value="MT Neptune">MT Neptune</option>
+            <option value="Bulk Master">Bulk Master</option>
+          </select>
+        </div>
+        <div>
+          <label for="plan-onboard-date" class="block text-sm font-medium text-gray-700">Estimated On-board Date</label>
+          <input type="date" id="plan-onboard-date" name="onBoardDate"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required="">
+        </div>
+        <div>
+          <label for="plan-offboard-date" class="block text-sm font-medium text-gray-700">Estimated Off-board
+            Date</label>
+          <input type="date" id="plan-offboard-date" name="offBoardDate"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required="">
+        </div>
+        <div>
+          <label for="plan-phase" class="block text-sm font-medium text-gray-700">Initial Phase</label>
+          <select id="plan-phase" name="phase"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100" disabled="">
+            <option value="pre-joining">Pre-joining</option>
+            <option value="joining">Joining</option>
+            <option value="onboard">Onboard</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="px-6 py-4 bg-gray-50 border-t flex justify-end gap-3">
+      <button id="cancel-plan-save"
+        class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400" (click)="close()">Cancel</button>
+      <button id="save-plan" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save Plan</button>
+    </div>
+  </div>
+
+</div>

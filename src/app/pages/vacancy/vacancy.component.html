@@ -1,0 +1,151 @@
+<div id="vacancies-content" class="tab-content">
+  <div class="bg-white rounded-lg shadow h-full flex flex-col">
+    <!-- Header -->
+    <div class="p-4 border-b flex flex-wrap gap-4 justify-between items-center">
+      <h2 class="text-xl font-bold text-gray-800">Open Vacancies</h2>
+      <button id="post-vacancy-btn" (click)="openVacanyForm()"
+        class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+            clip-rule="evenodd"></path>
+        </svg>
+        Post New Vacancy
+      </button>
+    </div>
+    <!-- Grid View -->
+    <div class="flex-1 overflow-auto custom-scrollbar">
+      <table class="w-full whitespace-nowrap">
+        <thead class="bg-gray-50 border-b border-gray-200 sticky top-0">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position / Title
+            </th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vessel</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Posted Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applicants</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <ng-container *ngFor="let vacancy of vacancies()">
+            <!-- Vacancy Row -->
+            <tr class="cursor-pointer">
+              <td class="px-6 py-4">
+                <button class="p-1 rounded-full hover:bg-gray-200" (click)="toggleRow(vacancy.id)">
+                  <svg class="h-5 w-5 text-gray-500 transition-transform" [class.rotate-90]="isExpanded(vacancy.id)"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                </button>
+              </td>
+              <td class="px-6 py-4">{{ vacancy.title }}</td>
+              <td class="px-6 py-4">{{ vacancy.vessel }}</td>
+              <td class="px-6 py-4">{{ vacancy.postedDate }}</td>
+              <td class="px-6 py-4">{{ vacancy.applicantsCount }}</td>
+              <td class="px-6 py-4">
+                <span
+                  [ngClass]="{'bg-green-100 text-green-800': vacancy.status==='Open', 'bg-red-100 text-red-800': vacancy.status==='Closed'}"
+                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                  {{ vacancy.status }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm">
+                <div class="flex items-center gap-x-3">
+                  <button data-action="view-applicants" class="text-blue-600 hover:text-blue-900"
+                    title="View Applicants" (click)="view(vacancy)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                      <path fill-rule="evenodd"
+                        d="M.458 10C3.732 4.943 9.522 3 10 3s6.268 1.943 9.542 7c-3.274 5.057-9.064 7-9.542 7S3.732 15.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                  <button data-action="edit-vacancy" class="text-gray-600 hover:text-gray-900" title="Edit" (click)="edit(vacancy)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                      <path fill-rule="evenodd"
+                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                  <button data-action="close-vacancy" class="text-red-600 hover:text-red-900" title="Close Vacancy" (click)="close(vacancy)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Drill-down row -->
+            <tr *ngIf="isExpanded(vacancy.id)" class="drill-down-row open">
+              <td colspan="7" class="p-0">
+                <div class="p-4 bg-gray-50">
+                  <table class="w-full" *ngIf="vacancy.applicantsList.length > 0; else noApplicants">
+                    <thead class="bg-gray-200">
+                      <tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">No.</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">Name</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">Age</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">Nationality</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">Rank</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">Status</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">Readiness</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let app of vacancy.applicantsList">
+                        <td class="px-4 py-2 text-sm">{{ app.no }}</td>
+                        <td class="px-4 py-2 text-sm font-medium text-blue-600">{{ app.name }}</td>
+                        <td class="px-4 py-2 text-sm">{{ app.age }}</td>
+                        <td class="px-4 py-2 text-sm">{{ app.nationality }}</td>
+                        <td class="px-4 py-2 text-sm">{{ app.rank }}</td>
+                        <td class="px-4 py-2 text-sm">
+                          <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            {{ app.status }}
+                          </span>
+                        </td>
+                        <td class="px-4 py-2 text-sm">{{ app.readiness }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-right text-sm font-medium">
+                          <div class="flex gap-2">
+                            <button
+                              class="px-3 py-1 text-xs bg-green-500 text-white rounded-md hover:bg-green-600">Approve</button>
+                            <button
+                              class="px-3 py-1 text-xs bg-red-500 text-white rounded-md hover:bg-red-600">Disapprove</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <ng-template #noApplicants>
+                    <p class="text-center text-gray-500 py-4">No applicants for this vacancy.</p>
+                  </ng-template>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- addform -->
+<app-Modal *ngIf="isVacanyFormOpen" title="Add vacancy">
+  <app-new-vacancy (closeForm)="isVacanyFormOpen = false"></app-new-vacancy>
+</app-Modal>
+
+
+<div id="message-box-container" class="fixed top-4 right-4 z-50 flex flex-col items-end">
+  <app-showMessage #msgBox></app-showMessage>
+</div>

@@ -1,0 +1,214 @@
+<div class="bg-white rounded-lg shadow-xl w-full max-w-5xl h-[90vh] m-4 flex flex-col">
+  <div class="p-4 border-b flex justify-between items-center">
+    <h3 class="text-xl font-bold">Post New Vacancy</h3>
+    <button id="close-vacancy-form" class="p-2 rounded-full hover:bg-gray-200" (click)="cancel()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="flex-1 p-6 overflow-y-auto custom-scrollbar">
+    <form [formGroup]="vacancyForm" id="post-vacancy-form" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Code (disabled) -->
+        <div>
+          <label for="code" class="block text-sm font-medium text-gray-700">Code</label>
+          <input type="text" id="code" formControlName="code"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-100"
+            >
+        </div>
+
+        <!-- Job Name -->
+        <div>
+          <label for="jobName" class="block text-sm font-medium text-gray-700">Job Name*</label>
+          <div class="flex mt-1">
+            <input type="text" id="jobName" formControlName="jobName"
+              class="block w-full p-2 border border-gray-300 rounded-l-md shadow-sm"
+              placeholder="Type To Filter">
+            <button type="button" class="bg-blue-600 text-white px-3 py-2 rounded-r-md hover:bg-blue-700">Add</button>
+          </div>
+          <p *ngIf="vacancyForm.get('jobName')?.touched && vacancyForm.get('jobName')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Request Date -->
+        <div>
+          <label for="requestDate" class="block text-sm font-medium text-gray-700">Request Date*</label>
+          <input type="date" id="requestDate" formControlName="requestDate"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          <p *ngIf="vacancyForm.get('requestDate')?.touched && vacancyForm.get('requestDate')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Exist Number of Employees -->
+        <div>
+          <label for="existEmployees" class="block text-sm font-medium text-gray-700">Exist Number of Employees</label>
+          <input type="number" id="existEmployees" formControlName="existEmployees"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Required Number of Employees -->
+        <div>
+          <label for="requiredEmployees" class="block text-sm font-medium text-gray-700">Required Number Of Employees</label>
+          <input type="number" id="requiredEmployees" formControlName="requiredEmployees"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Budget Man Power -->
+        <div>
+          <label for="budgetManpower" class="block text-sm font-medium text-gray-700">Budget Man Power</label>
+          <input type="text" id="budgetManpower" formControlName="budgetManpower"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Job Type -->
+        <div>
+          <label for="jobType" class="block text-sm font-medium text-gray-700">Job Type*</label>
+          <select id="jobType" formControlName="jobType"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <option value="">Type To Filter</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Contract">Contract</option>
+          </select>
+          <p *ngIf="vacancyForm.get('jobType')?.touched && vacancyForm.get('jobType')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Project Name -->
+        <div>
+          <label for="projectName" class="block text-sm font-medium text-gray-700">Project Name</label>
+          <input type="text" id="projectName" formControlName="projectName"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Type To Filter">
+        </div>
+
+        <!-- Recruitment Reason -->
+        <div>
+          <label for="recruitmentReason" class="block text-sm font-medium text-gray-700">Recruitment Reason*</label>
+          <select id="recruitmentReason" formControlName="recruitmentReason"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <option value="">Type To Filter</option>
+            <option value="New Position">New Position</option>
+            <option value="Replacement">Replacement</option>
+          </select>
+          <p *ngIf="vacancyForm.get('recruitmentReason')?.touched && vacancyForm.get('recruitmentReason')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Required Tools -->
+        <div>
+          <label for="requiredTools" class="block text-sm font-medium text-gray-700">Required Tools*</label>
+          <input type="text" id="requiredTools" formControlName="requiredTools"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Hint: You can select more than one val">
+          <p *ngIf="vacancyForm.get('requiredTools')?.touched && vacancyForm.get('requiredTools')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Educational Qualification -->
+        <div>
+          <label for="educationalQualification" class="block text-sm font-medium text-gray-700">Educational Qualification</label>
+          <input type="text" id="educationalQualification" formControlName="educationalQualification"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Experience Years -->
+        <div>
+          <label for="experienceYears" class="block text-sm font-medium text-gray-700">Experience Years</label>
+          <input type="number" id="experienceYears" formControlName="experienceYears"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Languages -->
+        <div>
+          <label for="languages" class="block text-sm font-medium text-gray-700">Languages</label>
+          <input type="text" id="languages" formControlName="languages"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Personal Skills -->
+        <div>
+          <label for="personalSkills" class="block text-sm font-medium text-gray-700">Personal Skills</label>
+          <input type="text" id="personalSkills" formControlName="personalSkills"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Computer Skills -->
+        <div>
+          <label for="computerSkills" class="block text-sm font-medium text-gray-700">Computer Skills</label>
+          <input type="text" id="computerSkills" formControlName="computerSkills"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Required Courses -->
+        <div>
+          <label for="requiredCourses" class="block text-sm font-medium text-gray-700">Required Courses</label>
+          <input type="text" id="requiredCourses" formControlName="requiredCourses"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Other -->
+        <div>
+          <label for="other" class="block text-sm font-medium text-gray-700">Other</label>
+          <input type="text" id="other" formControlName="other"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Required Date -->
+        <div>
+          <label for="requiredDate" class="block text-sm font-medium text-gray-700">Required Date*</label>
+          <input type="date" id="requiredDate" formControlName="requiredDate"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          <p *ngIf="vacancyForm.get('requiredDate')?.touched && vacancyForm.get('requiredDate')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+      </div>
+
+      <!-- Job Request Template -->
+      <div class="space-y-4 pt-6 border-t">
+        <div>
+          <label for="jobRequestTemplate" class="block text-sm font-medium text-gray-700">Job Request Template</label>
+          <select id="jobRequestTemplate" formControlName="jobRequestTemplate"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <option value="">Type To Filter</option>
+            <option value="Template A">Template A</option>
+            <option value="Template B">Template B</option>
+          </select>
+        </div>
+
+        <!-- Job Description -->
+        <div>
+          <label for="jobDescription" class="block text-sm font-medium text-gray-700">Job Description</label>
+          <textarea id="jobDescription" formControlName="jobDescription" rows="4"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></textarea>
+        </div>
+
+        <!-- Comments -->
+        <div>
+          <label for="comments" class="block text-sm font-medium text-gray-700">Comments</label>
+          <textarea id="comments" formControlName="comments" rows="4"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></textarea>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="px-6 py-4 bg-gray-50 border-t flex justify-end gap-3">
+        <button type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+          (click)="cancel()">Cancel</button>
+        <button type="button"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 flex items-center gap-2"
+          (click)="saveVacancy()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+              clip-rule="evenodd"></path>
+          </svg>
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

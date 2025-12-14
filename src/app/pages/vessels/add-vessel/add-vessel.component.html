@@ -1,0 +1,253 @@
+<div class="bg-white rounded-lg shadow-xl w-full max-w-5xl h-[95vh]  m-4 flex flex-col">
+  <div class="p-4 border-b flex justify-between items-center">
+    <h3 class="text-xl font-bold">Add New Vessel</h3>
+    <button id="close-vessel-form" class="p-2 rounded-full hover:bg-gray-200" (click)="close()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="flex-1 p-6 overflow-y-auto custom-scrollbar">
+    <form [formGroup]="vesselForm" id="add-vessel-form" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Name*</label>
+          <input type="text" id="name" formControlName="name"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+          <p *ngIf="vesselForm.get('name')?.touched && vesselForm.get('name')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Ship Owner -->
+        <div>
+          <label for="owner" class="block text-sm font-medium text-gray-700">Ship owner*</label>
+          <input type="text" id="owner" formControlName="owner"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+          <p *ngIf="vesselForm.get('owner')?.touched && vesselForm.get('owner')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- MMS -->
+        <div>
+          <label for="mms" class="block text-sm font-medium text-gray-700">MMS</label>
+          <input type="text" id="mms" formControlName="mms"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Our Fleet -->
+        <div>
+          <label for="ourFleet" class="block text-sm font-medium text-gray-700">Our fleet</label>
+          <select id="ourFleet" formControlName="ourFleet"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="">Select...</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <!-- Ship Manager -->
+        <div>
+          <label for="manager" class="block text-sm font-medium text-gray-700">Ship manager*</label>
+          <input type="text" id="manager" formControlName="manager"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+          <p *ngIf="vesselForm.get('manager')?.touched && vesselForm.get('manager')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Call Sign -->
+        <div>
+          <label for="callSign" class="block text-sm font-medium text-gray-700">Call sign</label>
+          <input type="text" id="callSign" formControlName="callSign"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- IMO -->
+        <div>
+          <label for="imo" class="block text-sm font-medium text-gray-700">IMO</label>
+          <input type="text" id="imo" formControlName="imo"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- DWT -->
+        <div>
+          <label for="dwt" class="block text-sm font-medium text-gray-700">DWT</label>
+          <input type="number" id="dwt" formControlName="dwt"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+          <input type="tel" id="phone" formControlName="phone"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Built Year -->
+        <div>
+          <label for="builtYear" class="block text-sm font-medium text-gray-700">Built year</label>
+          <input type="number" id="builtYear" formControlName="builtYear"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- GRT -->
+        <div>
+          <label for="grt" class="block text-sm font-medium text-gray-700">GRT</label>
+          <input type="number" id="grt" formControlName="grt"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+          <input type="email" id="email" formControlName="email"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+          <p *ngIf="vesselForm.get('email')?.touched && vesselForm.get('email')?.invalid"
+            class="text-red-500 text-xs mt-1">Invalid email</p>
+        </div>
+
+        <!-- Vessel Type -->
+        <div>
+          <label for="vesselType" class="block text-sm font-medium text-gray-700">Vessel type*</label>
+          <select id="vesselType" formControlName="vesselType"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="">Select...</option>
+            <option value="Container">Container</option>
+            <option value="Oil Tanker">Oil Tanker</option>
+            <option value="Bulk Carrier">Bulk Carrier</option>
+            <option value="General Cargo">General Cargo</option>
+          </select>
+          <p *ngIf="vesselForm.get('vesselType')?.touched && vesselForm.get('vesselType')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- TEU -->
+        <div>
+          <label for="teu" class="block text-sm font-medium text-gray-700">TEU</label>
+          <input type="number" id="teu" formControlName="teu"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Cargo Pump -->
+        <div>
+          <label for="cargoPump" class="block text-sm font-medium text-gray-700">Type of cargo pump</label>
+          <input type="text" id="cargoPump" formControlName="cargoPump"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Flag -->
+        <div>
+          <label for="flag" class="block text-sm font-medium text-gray-700">Flag*</label>
+          <select id="flag" formControlName="flag"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="">Select...</option>
+            <option value="Panama">Panama</option>
+            <option value="Liberia">Liberia</option>
+            <option value="Marshall Islands">Marshall Islands</option>
+            <option value="Russia">Russia</option>
+          </select>
+          <p *ngIf="vesselForm.get('flag')?.touched && vesselForm.get('flag')?.invalid"
+            class="text-red-500 text-xs mt-1">The field is required</p>
+        </div>
+
+        <!-- Cargo Tanks -->
+        <div>
+          <label for="cargoTanks" class="block text-sm font-medium text-gray-700">Cargo tanks</label>
+          <input type="text" id="cargoTanks" formControlName="cargoTanks"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Engine Model -->
+        <div>
+          <label for="engineModel" class="block text-sm font-medium text-gray-700">Engine model</label>
+          <input type="text" id="engineModel" formControlName="engineModel"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Geared / Cranes -->
+        <div>
+          <label for="geared" class="block text-sm font-medium text-gray-700">Geared/Cranes</label>
+          <select id="geared" formControlName="geared"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="">Select...</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <!-- Cargo Gear -->
+        <div>
+          <label for="cargoGear" class="block text-sm font-medium text-gray-700">Cargo gear</label>
+          <input type="text" id="cargoGear" formControlName="cargoGear"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Engine Type -->
+        <div>
+          <label for="engineType" class="block text-sm font-medium text-gray-700">Engine type</label>
+          <input type="text" id="engineType" formControlName="engineType"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- DIMS -->
+        <div>
+          <label for="dims" class="block text-sm font-medium text-gray-700">DIMS</label>
+          <input type="text" id="dims" formControlName="dims"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Speed -->
+        <div>
+          <label for="speed" class="block text-sm font-medium text-gray-700">Speed</label>
+          <input type="number" id="speed" formControlName="speed"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Engine Power HP -->
+        <div>
+          <label for="powerHp" class="block text-sm font-medium text-gray-700">Engine power (HP)</label>
+          <input type="number" id="powerHp" formControlName="powerHp"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- ECDIS Type -->
+        <div>
+          <label for="ecdisType" class="block text-sm font-medium text-gray-700">ECDIS type</label>
+          <select id="ecdisType" formControlName="ecdisType"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+            <option value="">Select...</option>
+            <option value="Type A">Type A</option>
+            <option value="Type B">Type B</option>
+            <option value="Type C">Type C</option>
+          </select>
+        </div>
+
+        <!-- Engine Power kWt -->
+        <div>
+          <label for="powerKwt" class="block text-sm font-medium text-gray-700">Engine power (kWt)</label>
+          <input type="number" id="powerKwt" formControlName="powerKwt"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+        </div>
+
+        <!-- Comment -->
+        <div class="md:col-span-3">
+          <label for="comment" class="block text-sm font-medium text-gray-700">Comment</label>
+          <textarea id="comment" rows="3" formControlName="comment"
+            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></textarea>
+        </div>
+
+      </div>
+
+
+      <!-- Buttons -->
+      <div class="px-6 py-4 bg-gray-50 border-t flex justify-end gap-3">
+        <button type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+          (click)="close()">Cancel</button>
+        <button type="button" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          (click)="saveVessel()">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>

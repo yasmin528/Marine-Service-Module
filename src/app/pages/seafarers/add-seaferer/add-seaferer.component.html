@@ -1,0 +1,657 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-7xl h-[95vh] flex flex-col overflow-hidden">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="text-xl font-bold">Add New Seafarer</h3>
+      <button type="button" (click)="closeModal()" class="p-2 rounded-full hover:bg-gray-200">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden">
+      <div class="w-1/4 bg-gray-50 border-r overflow-y-auto p-4">
+        <nav class="space-y-1">
+          <button type="button" (click)="activeTab = 'personalInfo'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='personalInfo'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Personal
+            Info</button>
+          <button type="button" (click)="activeTab = 'contactInfo'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='contactInfo'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Contact
+            & Emergency</button>
+          <button type="button" (click)="activeTab = 'employmentInfo'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='employmentInfo'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Employment</button>
+          <button type="button" (click)="activeTab = 'documentsInfo'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='documentsInfo'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Documents
+            & Visa</button>
+          <button type="button" (click)="activeTab = 'medicalInfo'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='medicalInfo'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Medical
+            & Insurance</button>
+        </nav>
+      </div>
+
+
+      <div id="seafarer-form-content" class="w-3/4 p-6 overflow-y-auto custom-scrollbar">
+
+        <form [formGroup]="seafarerForm" (ngSubmit)="saveSeafarerData()">
+
+
+          <div *ngIf="activeTab === 'personalInfo'" formGroupName="personalInfo">
+            <h3 class="text-lg font-medium mb-4 border-b pb-2">Personal Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <div>
+                <label for="EmployeeNameEN" class="block text-sm font-medium text-gray-700">Employee Name (EN)</label>
+                <input id="EmployeeNameEN" type="text" formControlName="EmployeeNameEN"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="EmployeeNameAR" class="block text-sm font-medium text-gray-700">Employee Name (AR)</label>
+                <input id="EmployeeNameAR" type="text" formControlName="EmployeeNameAR"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="EmployeeCode" class="block text-sm font-medium text-gray-700">Employee Code</label>
+                <input id="EmployeeCode" type="text" formControlName="EmployeeCode"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="Nationality" class="block text-sm font-medium text-gray-700">Nationality</label>
+                <input id="Nationality" type="text" formControlName="Nationality"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                <input id="Gender" type="text" formControlName="Gender"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Religion" class="block text-sm font-medium text-gray-700">Religion</label>
+                <input id="Religion" type="text" formControlName="Religion"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="BirthDate" class="block text-sm font-medium text-gray-700">Birth Date</label>
+                <input id="BirthDate" type="date" formControlName="BirthDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="BirthPlace" class="block text-sm font-medium text-gray-700">Birth Place</label>
+                <input id="BirthPlace" type="text" formControlName="BirthPlace"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Age" class="block text-sm font-medium text-gray-700">Age (Calculated)</label>
+                <input id="Age" type="number" formControlName="Age" readonly
+                  class="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="MaritalStatus" class="block text-sm font-medium text-gray-700">Marital Status</label>
+                <input id="MaritalStatus" type="text" formControlName="MaritalStatus"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="NameOfSpouse" class="block text-sm font-medium text-gray-700">Name of Spouse</label>
+                <input id="NameOfSpouse" type="text" formControlName="NameOfSpouse"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="NoOfChildren" class="block text-sm font-medium text-gray-700">No. of Children</label>
+                <input id="NoOfChildren" type="number" formControlName="NoOfChildren"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="NationalId" class="block text-sm font-medium text-gray-700">National ID</label>
+                <input id="NationalId" type="text" formControlName="NationalId"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="NationalIdExpiryDate" class="block text-sm font-medium text-gray-700">National ID Expiry
+                  Date</label>
+                <input id="NationalIdExpiryDate" type="date" formControlName="NationalIdExpiryDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div class="col-span-1"></div>
+
+              <div>
+                <label for="BodyWeight" class="block text-sm font-medium text-gray-700">Weight (kg)</label>
+                <input id="BodyWeight" type="number" formControlName="BodyWeight"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Height" class="block text-sm font-medium text-gray-700">Height (cm)</label>
+                <input id="Height" type="number" formControlName="Height"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="BloodType" class="block text-sm font-medium text-gray-700">Blood Type</label>
+                <input id="BloodType" type="text" formControlName="BloodType"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="NearestAirport" class="block text-sm font-medium text-gray-700">Nearest Airport</label>
+                <input id="NearestAirport" type="text" formControlName="NearestAirport"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div class="md:col-span-2">
+                <label for="Declaration" class="block text-sm font-medium text-gray-700">Declaration</label>
+                <textarea id="Declaration" formControlName="Declaration" rows="2"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab === 'contactInfo'" formGroupName="contactInfo">
+            <h3 class="text-lg font-medium mb-4 border-b pb-2">Contact & Emergency Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <h4 class="col-span-3 text-md font-medium mt-2 mb-1">General Contact</h4>
+              <div>
+                <label for="Email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input id="Email" type="email" formControlName="Email"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                <input id="Phone" type="text" formControlName="Phone"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Mobile" class="block text-sm font-medium text-gray-700">Mobile</label>
+                <input id="Mobile" type="text" formControlName="Mobile"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="BusinessPhone" class="block text-sm font-medium text-gray-700">Business Phone</label>
+                <input id="BusinessPhone" type="text" formControlName="BusinessPhone"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="SkypeID" class="block text-sm font-medium text-gray-700">Skype ID</label>
+                <input id="SkypeID" type="text" formControlName="SkypeID"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="ContactNumberHomeCountry" class="block text-sm font-medium text-gray-700">Contact No. (Home
+                  Country)</label>
+                <input id="ContactNumberHomeCountry" type="text" formControlName="ContactNumberHomeCountry"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div class="md:col-span-3">
+                <label for="Address" class="block text-sm font-medium text-gray-700">Current Address</label>
+                <textarea id="Address" formControlName="Address" rows="2"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+              </div>
+              <div class="md:col-span-3">
+                <label for="PermanentAddressHomeCountry" class="block text-sm font-medium text-gray-700">Permanent
+                  Address (Home Country)</label>
+                <textarea id="PermanentAddressHomeCountry" formControlName="PermanentAddressHomeCountry" rows="2"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+              </div>
+
+              <h4 class="col-span-3 text-md font-medium mt-4 mb-1 border-t pt-4">Emergency Contact (Next of Kin)</h4>
+              <div>
+                <label for="KinName" class="block text-sm font-medium text-gray-700">Kin Name</label>
+                <input id="KinName" type="text" formControlName="KinName"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="KinPhone" class="block text-sm font-medium text-gray-700">Kin Phone</label>
+                <input id="KinPhone" type="text" formControlName="KinPhone"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="KinEmail" class="block text-sm font-medium text-gray-700">Kin Email</label>
+                <input id="KinEmail" type="email" formControlName="KinEmail"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="ContactNameAndNumberDuringEmergenciesUAE"
+                  class="block text-sm font-medium text-gray-700">Emergency Contact (UAE)</label>
+                <input id="ContactNameAndNumberDuringEmergenciesUAE" type="text"
+                  formControlName="ContactNameAndNumberDuringEmergenciesUAE"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="ContactNameAndNumberDuringEmergenciesHome"
+                  class="block text-sm font-medium text-gray-700">Emergency Contact (Home)</label>
+                <input id="ContactNameAndNumberDuringEmergenciesHome" type="text"
+                  formControlName="ContactNameAndNumberDuringEmergenciesHome"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div class="col-span-1"></div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab === 'employmentInfo'" formGroupName="employmentInfo">
+            <h3 class="text-lg font-medium mb-4 border-b pb-2">Employment & Job Details</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <div>
+                <label for="EmpId">Employee ID *</label>
+                <select id="EmpId" formControlName="EmpId"
+                  class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                  <option value="">Select Employee</option>
+                  <option *ngFor="let emp of empList" [value]="emp.Value">{{ emp.Text }}</option>
+                </select>
+              </div>
+              <div>
+                <label for="JobNameEN" class="block text-sm font-medium text-gray-700">Job Name (EN)</label>
+                <input id="JobNameEN" type="text" formControlName="JobNameEN"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="JobNameAR" class="block text-sm font-medium text-gray-700">Job Name (AR)</label>
+                <input id="JobNameAR" type="text" formControlName="JobNameAR"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="Company" class="block text-sm font-medium text-gray-700">Company</label>
+                <input id="Company" type="text" formControlName="Company"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="WorkLocation" class="block text-sm font-medium text-gray-700">Work Location</label>
+                <input id="WorkLocation" type="text" formControlName="WorkLocation"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="EmpManager" class="block text-sm font-medium text-gray-700">Manager/Supervisor</label>
+                <input id="EmpManager" type="text" formControlName="EmpManager"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="EmploymentDate" class="block text-sm font-medium text-gray-700">Employment Date</label>
+                <input id="EmploymentDate" type="date" formControlName="EmploymentDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="PropationEndDate" class="block text-sm font-medium text-gray-700">Probation End Date</label>
+                <input id="PropationEndDate" type="date" formControlName="PropationEndDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Status" class="block text-sm font-medium text-gray-700">Status</label>
+                <input id="Status" type="number" formControlName="Status"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="PostCategoryLevel" class="block text-sm font-medium text-gray-700">Post Category
+                  Level</label>
+                <input id="PostCategoryLevel" type="text" formControlName="PostCategoryLevel"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="Tier" class="block text-sm font-medium text-gray-700">Tier</label>
+                <input id="Tier" type="text" formControlName="Tier"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div class="col-span-1"></div>
+
+              <h4 class="col-span-3 text-md font-medium mt-4 mb-1 border-t pt-4">Financial Details</h4>
+              <div>
+                <label for="Salary" class="block text-sm font-medium text-gray-700">Salary</label>
+                <input id="Salary" type="number" formControlName="Salary"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="JoiningCost" class="block text-sm font-medium text-gray-700">Joining Cost</label>
+                <input id="JoiningCost" type="number" formControlName="JoiningCost"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="PreJoiningCost" class="block text-sm font-medium text-gray-700">Pre-Joining Cost</label>
+                <input id="PreJoiningCost" type="number" formControlName="PreJoiningCost"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="OnBoardingCost" class="block text-sm font-medium text-gray-700">On-Boarding Cost</label>
+                <input id="OnBoardingCost" type="number" formControlName="OnBoardingCost"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab === 'documentsInfo'" formGroupName="documentsInfo">
+            <h3 class="text-lg font-medium mb-4 border-b pb-2">Documents & Credentials</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <h4 class="col-span-3 text-md font-medium mt-2 mb-1">Passport Details</h4>
+              <div>
+                <label for="PassportNumber" class="block text-sm font-medium text-gray-700">Passport Number</label>
+                <input id="PassportNumber" type="text" formControlName="PassportNumber"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="PassPortIssueDate" class="block text-sm font-medium text-gray-700">Passport Issue
+                  Date</label>
+                <input id="PassPortIssueDate" type="date" formControlName="PassPortIssueDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="PassportExpireDate" class="block text-sm font-medium text-gray-700">Passport Expiry
+                  Date</label>
+                <input id="PassportExpireDate" type="date" formControlName="PassportExpireDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <h4 class="col-span-3 text-md font-medium mt-4 mb-1 border-t pt-4">Visa & Residence Details</h4>
+              <div>
+                <label for="VisaSponsorId">Visa Sponsor *</label>
+                <select id="VisaSponsorId" formControlName="VisaSponsorId"
+                  class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                  <option value="">Select Sponsor</option>
+                  <option *ngFor="let sponsor of visaSponsorList" [value]="sponsor.Value">{{ sponsor.Text }}</option>
+                </select>
+              </div>
+              <div>
+                <label for="SponsorName" class="block text-sm font-medium text-gray-700">Sponsor Name</label>
+                <input id="SponsorName" type="text" formControlName="SponsorName"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="VisaUAEIdNO" class="block text-sm font-medium text-gray-700">Visa UAE ID NO</label>
+                <input id="VisaUAEIdNO" type="text" formControlName="VisaUAEIdNO"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="VisaIssueDate" class="block text-sm font-medium text-gray-700">Visa Issue Date</label>
+                <input id="VisaIssueDate" type="date" formControlName="VisaIssueDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="VisaExpiryDate" class="block text-sm font-medium text-gray-700">Visa Expiry Date</label>
+                <input id="VisaExpiryDate" type="date" formControlName="VisaExpiryDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="ResidenceNumber" class="block text-sm font-medium text-gray-700">Residence Number</label>
+                <input id="ResidenceNumber" type="text" formControlName="ResidenceNumber"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <h4 class="col-span-3 text-md font-medium mt-4 mb-1 border-t pt-4">Seaman Book</h4>
+              <div>
+                <label for="SeamanBookNO" class="block text-sm font-medium text-gray-700">Seaman Book NO</label>
+                <input id="SeamanBookNO" type="text" formControlName="SeamanBookNO"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="SeamanIssueDate" class="block text-sm font-medium text-gray-700">Seaman Issue Date</label>
+                <input id="SeamanIssueDate" type="date" formControlName="SeamanIssueDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="SeamanExpiryDate" class="block text-sm font-medium text-gray-700">Seaman Expiry Date</label>
+                <input id="SeamanExpiryDate" type="date" formControlName="SeamanExpiryDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <h4 class="col-span-3 text-md font-medium mt-4 mb-1 border-t pt-4">CICPA Details</h4>
+              <div>
+                <label for="CicpaNO" class="block text-sm font-medium text-gray-700">Cicpa NO</label>
+                <input id="CicpaNO" type="text" formControlName="CicpaNO"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="CicpaIssueDate" class="block text-sm font-medium text-gray-700">Cicpa Issue Date</label>
+                <input id="CicpaIssueDate" type="date" formControlName="CicpaIssueDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="CicpaExpiryDate" class="block text-sm font-medium text-gray-700">Cicpa Expiry Date</label>
+                <input id="CicpaExpiryDate" type="date" formControlName="CicpaExpiryDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <h4 class="col-span-3 text-md font-medium mt-4 mb-1 border-t pt-4">Other Certifications</h4>
+              <div>
+                <label for="SyndicateCardNumber" class="block text-sm font-medium text-gray-700">Syndicate Card
+                  Number</label>
+                <input id="SyndicateCardNumber" type="text" formControlName="SyndicateCardNumber"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="SyndicateExpirationDate" class="block text-sm font-medium text-gray-700">Syndicate
+                  Expiration Date</label>
+                <input id="SyndicateExpirationDate" type="date" formControlName="SyndicateExpirationDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="DrivingLicenseNumber" class="block text-sm font-medium text-gray-700">Driving License
+                  Number</label>
+                <input id="DrivingLicenseNumber" type="text" formControlName="DrivingLicenseNumber"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="WorkPermit" class="block text-sm font-medium text-gray-700">Work Permit</label>
+                <input id="WorkPermit" type="text" formControlName="WorkPermit"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="PermitNumber" class="block text-sm font-medium text-gray-700">Permit Number</label>
+                <input id="PermitNumber" type="text" formControlName="PermitNumber"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="PermitExpirationDate" class="block text-sm font-medium text-gray-700">Permit Expiration
+                  Date</label>
+                <input id="PermitExpirationDate" type="date" formControlName="PermitExpirationDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="MilitaryServiceExpireDate" class="block text-sm font-medium text-gray-700">Military Service
+                  Expire Date</label>
+                <input id="MilitaryServiceExpireDate" type="date" formControlName="MilitaryServiceExpireDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div class="col-span-2"></div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab === 'medicalInfo'" formGroupName="medicalInfo">
+            <h3 class="text-lg font-medium mb-4 border-b pb-2">Medical & Insurance Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <h4 class="col-span-3 text-md font-medium mt-2 mb-1">Insurance Records</h4>
+              <div>
+                <label for="InsuranceDate" class="block text-sm font-medium text-gray-700">Insurance Date</label>
+                <input id="InsuranceDate" type="date" formControlName="InsuranceDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="ConfirmationInsuranceDate" class="block text-sm font-medium text-gray-700">Confirmation
+                  Insurance Date</label>
+                <input id="ConfirmationInsuranceDate" type="date" formControlName="ConfirmationInsuranceDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="InsuranceNumber" class="block text-sm font-medium text-gray-700">Insurance Number</label>
+                <input id="InsuranceNumber" type="text" formControlName="InsuranceNumber"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+
+              <div>
+                <label for="InsuranceTitle" class="block text-sm font-medium text-gray-700">Insurance Title</label>
+                <input id="InsuranceTitle" type="text" formControlName="InsuranceTitle"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="InsuranceOffice" class="block text-sm font-medium text-gray-700">Insurance Office</label>
+                <input id="InsuranceOffice" type="text" formControlName="InsuranceOffice"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div class="col-span-1"></div>
+
+              <div>
+                <label for="MedicalInsuranceNo" class="block text-sm font-medium text-gray-700">Medical Insurance
+                  No</label>
+                <input id="MedicalInsuranceNo" type="text" formControlName="MedicalInsuranceNo"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="MedicalInsuranceDate" class="block text-sm font-medium text-gray-700">Medical Insurance
+                  Date</label>
+                <input id="MedicalInsuranceDate" type="date" formControlName="MedicalInsuranceDate"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+              <div>
+                <label for="MedicalInsuranceAmount" class="block text-sm font-medium text-gray-700">Medical Insurance
+                  Amount</label>
+                <input id="MedicalInsuranceAmount" type="number" formControlName="MedicalInsuranceAmount"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+              </div>
+            </div>
+
+            <h4 class="col-span-3 text-md font-medium mt-6 mb-3 border-t pt-4">Medical & Safety History</h4>
+            <div class="space-y-4">
+
+              <div class="border p-3 rounded-md bg-gray-50">
+                <div class="flex items-center">
+                  <input id="medReason" type="checkbox" formControlName="SignedOffFromAShipDueToMedicalReason"
+                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                  <label for="medReason" class="ml-3 block text-sm font-medium text-gray-700">
+                    Signed Off from a ship due to a medical reason?
+                  </label>
+                </div>
+                <div *ngIf="seafarerForm.get('medicalInfo')?.get('SignedOffFromAShipDueToMedicalReason')?.value"
+                  class="mt-2 pl-6">
+                  <label for="SignedOffFromAShipDueToMedicalReasonComment"
+                    class="block text-sm font-medium text-gray-700">Details:</label>
+                  <textarea id="SignedOffFromAShipDueToMedicalReasonComment"
+                    formControlName="SignedOffFromAShipDueToMedicalReasonComment" rows="1"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"></textarea>
+                </div>
+              </div>
+
+              <div class="border p-3 rounded-md bg-gray-50">
+                <div class="flex items-center">
+                  <input id="operation" type="checkbox" formControlName="UndergoneAnyMdicalOperation"
+                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                  <label for="operation" class="ml-3 block text-sm font-medium text-gray-700">
+                    Undergone Any Medical Operation?
+                  </label>
+                </div>
+                <div *ngIf="seafarerForm.get('medicalInfo')?.get('UndergoneAnyMdicalOperation')?.value"
+                  class="mt-2 pl-6">
+                  <label for="UndergoneAnyMdicalOperationComment"
+                    class="block text-sm font-medium text-gray-700">Details:</label>
+                  <textarea id="UndergoneAnyMdicalOperationComment" formControlName="UndergoneAnyMdicalOperationComment"
+                    rows="1"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"></textarea>
+                </div>
+              </div>
+
+              <div class="border p-3 rounded-md bg-gray-50">
+                <div class="flex items-center">
+                  <input id="consult" type="checkbox" formControlName="DoctorConsultation"
+                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                  <label for="consult" class="ml-3 block text-sm font-medium text-gray-700">
+                    Had Doctor Consultation?
+                  </label>
+                </div>
+                <div *ngIf="seafarerForm.get('medicalInfo')?.get('DoctorConsultation')?.value" class="mt-2 pl-6">
+                  <label for="DoctorConsultationComment"
+                    class="block text-sm font-medium text-gray-700">Details:</label>
+                  <textarea id="DoctorConsultationComment" formControlName="DoctorConsultationComment" rows="1"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"></textarea>
+                </div>
+              </div>
+
+              <div class="border p-3 rounded-md bg-gray-50">
+                <div class="flex items-center">
+                  <input id="disability" type="checkbox" formControlName="HealthOrDisabilityProblem"
+                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                  <label for="disability" class="ml-3 block text-sm font-medium text-gray-700">
+                    Health Or Disability Problem?
+                  </label>
+                </div>
+                <div *ngIf="seafarerForm.get('medicalInfo')?.get('HealthOrDisabilityProblem')?.value" class="mt-2 pl-6">
+                  <label for="HealthOrDisabilityProblemComment"
+                    class="block text-sm font-medium text-gray-700">Details:</label>
+                  <textarea id="HealthOrDisabilityProblemComment" formControlName="HealthOrDisabilityProblemComment"
+                    rows="1"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"></textarea>
+                </div>
+              </div>
+
+              <div class="border p-3 rounded-md bg-gray-50">
+                <div class="flex items-center">
+                  <input id="accident" type="checkbox" formControlName="InquiryOrInvolvedMaritimeAccident"
+                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                  <label for="accident" class="ml-3 block text-sm font-medium text-gray-700">
+                    Inquiry Or Involved in a Maritime Accident?
+                  </label>
+                </div>
+                <div *ngIf="seafarerForm.get('medicalInfo')?.get('InquiryOrInvolvedMaritimeAccident')?.value"
+                  class="mt-2 pl-6">
+                  <label for="InquiryOrInvolvedMaritimeAccidentComment"
+                    class="block text-sm font-medium text-gray-700">Details:</label>
+                  <textarea id="InquiryOrInvolvedMaritimeAccidentComment"
+                    formControlName="InquiryOrInvolvedMaritimeAccidentComment" rows="1"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"></textarea>
+                </div>
+              </div>
+
+              <div class="border p-3 rounded-md bg-gray-50">
+                <div class="flex items-center">
+                  <input id="license" type="checkbox" formControlName="LicenseSuspendedOrRevoked"
+                    class="h-4 w-4 text-blue-600 border-gray-300 rounded">
+                  <label for="license" class="ml-3 block text-sm font-medium text-gray-700">
+                    License Suspended Or Revoked?
+                  </label>
+                </div>
+                <div *ngIf="seafarerForm.get('medicalInfo')?.get('LicenseSuspendedOrRevoked')?.value" class="mt-2 pl-6">
+                  <label for="LicenseSuspendedOrRevokedComment"
+                    class="block text-sm font-medium text-gray-700">Details:</label>
+                  <textarea id="LicenseSuspendedOrRevokedComment" formControlName="LicenseSuspendedOrRevokedComment"
+                    rows="1"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="Notes" class="block text-sm font-medium text-gray-700">Notes</label>
+                <textarea id="Notes" formControlName="Notes" rows="3"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+              </div>
+              <div>
+                <label for="Remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
+                <textarea id="Remarks" formControlName="Remarks" rows="3"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="p-4 border-t flex justify-end">
+            <button type="submit" [disabled]="seafarerForm.invalid"
+              class="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400">
+              Save Seafarer Data
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

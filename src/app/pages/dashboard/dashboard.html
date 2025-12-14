@@ -1,0 +1,93 @@
+<div id="dashboard-content" class="tab-content">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Crew on board -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg class="h-6 w-6 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H2v-2a3 3 0 015.356-1.857M9 20v-2a3 3 0 00-3.465-2.91A3.998 3.998 0 002 12V8a4 4 0 013.465-3.91A3 3 0 009 2h2a3 3 0 003 3.465V6a3 3 0 01-3.465 2.91A3.998 3.998 0 0014 12v4a3 3 0 00-3 3.465z" />
+        </svg>
+        Crew on board
+      </h3>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-md">
+          <span class="text-blue-700 font-medium">Total crew on board</span>
+          <span class="text-blue-700 font-bold text-xl">32</span>
+        </div>
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+          <span class="text-gray-700 font-medium">Total officers</span>
+          <span class="text-gray-700 font-bold text-xl">17</span>
+        </div>
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+          <span class="text-gray-700 font-medium">Total ratings</span>
+          <span class="text-gray-700 font-bold text-xl">15</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nationalities -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg class="h-6 w-6 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 21v-4m0 0V5a2 2 0 012-2h6.5M3 17h8m3 0h6m-3 0v4m0-4h.01M17 12h.01M12 21h.01M7 21h.01" /></svg>
+        Nationalities
+      </h3>
+      <canvas id="nationalityChart" #nationalityChart></canvas>
+    </div>
+
+    <!-- Age groups -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg class="h-6 w-6 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        Age groups
+      </h3>
+      <canvas id="ageChart" #ageChart></canvas>
+    </div>
+
+    <!-- People on board -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg class="h-6 w-6 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.146M18 14v4h4v-4h-4z" /></svg>
+        People on board
+      </h3>
+      <div class="flex items-center justify-center h-40 relative">
+        <div
+          class="w-32 h-32 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold text-lg">
+          32</div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div
+            class="w-24 h-24 bg-white rounded-full flex flex-col items-center justify-center text-sm text-gray-600 shadow-inner">
+            <span>37.5%</span>
+            <span>Seafarers</span>
+            <span>Retention Rate</span>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-gray-500 text-sm mt-4">Retention Rate: 37.5%</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Open vacancies -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Open vacancies</h3>
+      <div class="h-80"><canvas id="vacanciesByVesselChart" #vacanciesByVesselChart></canvas></div>
+    </div>
+    <!-- Seafarers by Rank -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <svg class="h-6 w-6 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0h7.5a2.5 2.5 0 002.5-2.5V7.5a2.5 2.5 0 00-2.5-2.5h-1.5m-3 15v-6a2 2 0 00-2-2H8a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0h7.5a2.5 2.5 0 002.5-2.5V7.5a2.5 2.5 0 00-2.5-2.5h-1.5m-3 15v-6a2 2 0 00-2-2H8a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2z" />
+        </svg>
+        Seafarers by Rank
+      </h3>
+      <div class="h-80"><canvas id="seafarersByRankChart" #seafarersByRankChart></canvas></div>
+    </div>
+  </div>
+</div>

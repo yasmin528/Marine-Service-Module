@@ -1,0 +1,20 @@
+<div id="planning-content" class="tab-content">
+  <div class="bg-white rounded-lg shadow h-full flex flex-col">
+    <div class="p-4 border-b">
+      <h2 class="text-xl font-bold text-gray-800">Select a Vessel for Planning</h2>
+    </div>
+    <div class="p-4 overflow-y-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+        <button *ngFor="let v of vessels()" (click)="vesselSchedule(v)"
+          class="planning-vessel-select-btn p-4 border rounded-lg hover:bg-blue-50 hover:border-blue-400 hover:shadow-md transition-all text-left">
+          <p class="font-bold text-blue-700">{{ v.name }}</p>
+          <p class="text-sm text-gray-600">{{ v.type }}</p>
+          <p class="text-xs text-gray-500">IMO: {{ v.imo }}</p>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>

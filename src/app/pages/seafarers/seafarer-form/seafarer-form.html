@@ -1,0 +1,1325 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-7xl h-[95vh] flex flex-col overflow-hidden">
+
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="text-xl font-bold">Add New Seafarer</h3>
+      <button (click)="closeModal()" class="p-2 rounded-full hover:bg-gray-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden">
+
+      <div class="w-1/4 bg-gray-50 border-r overflow-y-auto p-4">
+        <nav class="space-y-1">
+          <button type="button" (click)="activeTab='personal'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='personal'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Personal Data</button>
+          <button type="button" (click)="activeTab='contact'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='contact'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Contact Data</button>
+          <button type="button" (click)="activeTab='offshore'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='offshore'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200"> Offshore Data</button>
+          <button type="button" (click)="activeTab='education'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='education'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Educational
+            Qualifications</button>
+          <button type="button" (click)="activeTab='certificate'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='certificate'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Certificate</button>
+
+          <button type="button" (click)="activeTab='DPCertificationLicense'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='DPCertificationLicense'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">
+            DP Certification/License
+          </button>
+
+          <button type="button" (click)="activeTab='stcw'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='stcw'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">
+            Stcw/Other Training
+          </button>
+          <button type="button" (click)="activeTab='languages'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='languages'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Languages Known</button>
+          <button type="button" (click)="activeTab='workExperience'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='workExperience'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">
+            Summary Of Work Experience
+          </button>
+          <button type="button" (click)="activeTab='health'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='health'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">Health / Medical</button>
+          <button type="button" (click)="activeTab='Payroll'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='Payroll'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">
+            Payroll Details
+          </button>
+          <button type="button" (click)="activeTab='professionalHistory'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='professionalHistory'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">
+            General Information
+          </button>
+          <button type="button" (click)="activeTab='references'"
+            [ngClass]="{'bg-blue-100 text-blue-700 font-semibold': activeTab==='references'}"
+            class="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-gray-200">References</button>
+        </nav>
+      </div>
+
+      <div id="seafarer-form-content" class="w-3/4 p-6 overflow-y-auto custom-scrollbar">
+        <form [formGroup]="seafarerForm">
+
+          <div *ngIf="activeTab==='personal'" [formGroup]="personalForm"
+            class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+
+            <div>
+              <label for="employee" class="block text-sm font-medium text-gray-700">Employee</label>
+              <select id="employee" formControlName="employee"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option [ngValue]="null" disabled selected>Select an Employee</option>
+                <option *ngFor="let emp of employees" [ngValue]="emp.Value">
+                  {{ emp.Text}}
+                </option>
+              </select>
+              <div *ngIf="employees.length === 0" class="text-xs text-gray-500 mt-1">Loading employees...</div>
+            </div>
+
+            <div>
+              <label for="nationality" class="block text-sm font-medium text-gray-700">Nationality</label>
+              <input id="nationality" formControlName="nationality" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+              <input id="dob" formControlName="dob" type="date"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
+              <input id="age" formControlName="age" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Calculated Age">
+            </div>
+
+            <div>
+              <label for="pob" class="block text-sm font-medium text-gray-700">Place of Birth</label>
+              <input id="pob" formControlName="pob" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="religion" class="block text-sm font-medium text-gray-700">Religion</label>
+              <input id="religion" formControlName="religion" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="maritalStatus" class="block text-sm font-medium text-gray-700">Marital
+                Status</label>
+              <input id="maritalStatus" formControlName="maritalStatus" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="spouseName" class="block text-sm font-medium text-gray-700">Name Of Spouse</label>
+              <input id="spouseName" formControlName="spouseName" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="childrenCount" class="block text-sm font-medium text-gray-700">No. Of
+                Children</label>
+              <input id="childrenCount" formControlName="childrenCount" type="number"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="weight" class="block text-sm font-medium text-gray-700">Body Weight (Kg)</label>
+              <input id="weight" formControlName="weight" type="number"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="height" class="block text-sm font-medium text-gray-700">Height (cm)</label>
+              <input id="height" formControlName="height" type="number"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="nearestAirport" class="block text-sm font-medium text-gray-700">Nearest
+                Airport</label>
+              <input id="nearestAirport" formControlName="nearestAirport" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="md:col-span-2">
+              <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
+              <textarea id="remarks" formControlName="remarks"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+            </div>
+
+            <div>
+              <label for="dateOfHire" class="block text-sm font-medium text-gray-700">Date of Hire</label>
+              <input id="dateOfHire" formControlName="dateOfHire" type="date"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="passportNo" class="block text-sm font-medium text-gray-700">Passport Number</label>
+              <input id="passportNo" formControlName="passportNo" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="passportIssueDate" class="block text-sm font-medium text-gray-700">Passport Issue
+                Date</label>
+              <input id="passportIssueDate" formControlName="passportIssueDate" type="date"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="passportExpiryDate" class="block text-sm font-medium text-gray-700">Passport
+                Expiry Date</label>
+              <input id="passportExpiryDate" formControlName="passportExpiryDate" type="date"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="rank" class="block text-sm font-medium text-gray-700">Rank (Job Name)</label>
+              <input id="rank" formControlName="rank" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="visaSponsor" class="block text-sm font-medium text-gray-700">Visa Sponsor</label>
+              <select id="visaSponsor" formControlName="visaSponsor"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option [ngValue]="null" disabled selected>Select a Sponsor</option>
+                <option *ngFor="let sponsor of sponsors" [ngValue]="sponsor.Value">
+                  {{ sponsor.Text }}
+                </option>
+              </select>
+              <div *ngIf="sponsors.length === 0" class="text-xs text-gray-500 mt-1">Loading sponsors...</div>
+            </div>
+
+            <div>
+              <label for="visaNo" class="block text-sm font-medium text-gray-700">VISA / UAE ID NO.</label>
+              <input id="visaNo" formControlName="visaNo" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="visaIssueDate" class="block text-sm font-medium text-gray-700">VISA / UAE ID Issue
+                Date</label>
+              <input id="visaIssueDate" formControlName="visaIssueDate" type="date"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="visaExpiryDate" class="block text-sm font-medium text-gray-700">VISA / UAE ID
+                Expiry Date</label>
+              <input id="visaExpiryDate" formControlName="visaExpiryDate" type="date"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="residenceNumber" class="block text-sm font-medium text-gray-700">Residence
+                Number</label>
+              <input id="residenceNumber" formControlName="residenceNumber" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="healthInsuranceExpiry" class="block text-sm font-medium text-gray-700">Health
+                Insurance Expiry Date</label>
+              <input id="healthInsuranceExpiry" formControlName="healthInsuranceExpiry" type="date"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+          </div>
+
+
+          <div *ngIf="activeTab==='contact'" [formGroup]="contactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+              <input id="email" formControlName="email" type="email"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="permanentAddress" class="block text-sm font-medium text-gray-700">Permanent
+                Address(Home Country)</label>
+              <input id="permanentAddress" formControlName="permanentAddress" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="homeContact" class="block text-sm font-medium text-gray-700">Contact Number(Home
+                Country)</label>
+              <input id="homeContact" formControlName="homeContact" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div>
+              <label for="emergencyContactUAE" class="block text-sm font-medium text-gray-700">Contact Name
+                & Number During Emergencies (UAE)</label>
+              <input id="emergencyContactUAE" formControlName="emergencyContactUAE" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="md:col-span-2">
+              <label for="emergencyContactHome" class="block text-sm font-medium text-gray-700">Contact Name
+                & Number During Emergencies (Home)</label>
+              <input id="emergencyContactHome" formControlName="emergencyContactHome" type="text"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+          </div>
+
+
+          <div *ngIf="activeTab==='offshore'" [formGroup]="offshoreForm"
+            class="w-full overflow-y-auto custom-scrollbar">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              <div>
+                <label for="seamanBookNo" class="block text-sm font-medium text-gray-700">Seaman Book
+                  NO.</label>
+                <input id="seamanBookNo" formControlName="seamanBookNo" type="text"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              </div>
+
+              <div>
+                <label for="seamanIssueDate" class="block text-sm font-medium text-gray-700">Seaman Issue
+                  Date</label>
+                <input id="seamanIssueDate" formControlName="seamanIssueDate" type="date"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              </div>
+
+              <div>
+                <label for="seamanExpiryDate" class="block text-sm font-medium text-gray-700">Seaman
+                  Expiry Date</label>
+                <input id="seamanExpiryDate" formControlName="seamanExpiryDate" type="date"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              </div>
+
+              <div>
+                <label for="cicpaNo" class="block text-sm font-medium text-gray-700">CICPA NO</label>
+                <input id="cicpaNo" formControlName="cicpaNo" type="text"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              </div>
+
+              <div>
+                <label for="cicpaIssueDate" class="block text-sm font-medium text-gray-700">CICPA Issue
+                  Date</label>
+                <input id="cicpaIssueDate" formControlName="cicpaIssueDate" type="date"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              </div>
+
+              <div>
+                <label for="cicpaExpiryDate" class="block text-sm font-medium text-gray-700">CICPA Expiry
+                  Date</label>
+                <input id="cicpaExpiryDate" formControlName="cicpaExpiryDate" type="date"
+                  class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              </div>
+
+            </div>
+          </div>
+
+
+          <div *ngIf="activeTab==='education'" class="w-full overflow-y-auto custom-scrollbar">
+            <div [formGroup]="newEducationGroup">
+              <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                  <div>
+                    <label for="eduDegree" class="block text-sm font-medium text-gray-700">Degree /
+                      Course </label>
+                    <input type="text" id="eduDegree" formControlName="degree"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="eduMajor" class="block text-sm font-medium text-gray-700">Major /
+                      Subject</label>
+                    <input type="text" id="eduMajor" formControlName="major"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="eduIssueDate" class="block text-sm font-medium text-gray-700">Issue
+                      Date</label>
+                    <input type="date" id="eduIssueDate" formControlName="issueDate"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="eduUniversity" class="block text-sm font-medium text-gray-700">University</label>
+                    <input type="text" id="eduUniversity" formControlName="university"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label for="eduCountry" class="block text-sm font-medium text-gray-700">Country</label>
+                    <input type="text" id="eduCountry" formControlName="country"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+
+                </div>
+              </div>
+
+              <div class="flex justify-end mt-4">
+                <button type="button" id="add-education-btn" (click)="addEducation()"
+                  [disabled]="newEducationGroup.invalid"
+                  class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                  Add
+                </button>
+              </div>
+              <div [formGroup]="seafarerForm">
+                <div class="mt-6" formArrayName="education">
+                  <h4 class="text-md font-medium text-gray-800 mb-2">Added Qualifications</h4>
+                  <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                      <thead class="bg-gray-100">
+                        <tr>
+                          <th class="px-4 py-2 text-left font-medium text-gray-600">Degree / Course
+                          </th>
+                          <th class="px-4 py-2 text-left font-medium text-gray-600">Major / Subject
+                          </th>
+                          <th class="px-4 py-2 text-left font-medium text-gray-600">Issue Date</th>
+                          <th class="px-4 py-2 text-left font-medium text-gray-600">University</th>
+                          <th class="px-4 py-2 text-left font-medium text-gray-600">Country</th>
+                          <th class="px-4 py-2 w-10"></th>
+                        </tr>
+                      </thead>
+                      <tbody id="education-table-body">
+                        <tr *ngFor="let control of educationArray.controls; let i = index" [formGroupName]="i">
+                          <td class="px-4 py-2">{{ control.get('degree')?.value }}</td>
+                          <td class="px-4 py-2">{{ control.get('major')?.value }}</td>
+                          <td class="px-4 py-2">{{ control.get('issueDate')?.value | date }}</td>
+                          <td class="px-4 py-2">{{ control.get('university')?.value }}</td>
+                          <td class="px-4 py-2">{{ control.get('country')?.value }}</td>
+
+                          <td class="px-4 py-2">
+                            <button type="button" (click)="removeEducation(i)" class="text-red-600 hover:text-red-800"
+                              title="Remove Qualification">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 10-2 0v6a1 1 0 102 0V8z"
+                                  clip-rule="evenodd" />
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr *ngIf="educationArray.length === 0">
+                          <td colspan="7" class="text-center py-4 text-gray-500">No educational
+                            qualifications added yet.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="activeTab==='certificate'" class="w-full overflow-y-auto custom-scrollbar">
+            <div class="space-y-6">
+
+              <div [formGroup]="newCertificateGroup">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                  <div>
+                    <label for="certCapacity" class="block text-sm font-medium text-gray-700">Capacity
+                    </label>
+                    <input type="text" id="certCapacity" formControlName="capacity"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="certRegulation" class="block text-sm font-medium text-gray-700">Regulation</label>
+                    <input type="text" id="certRegulation" formControlName="regulation"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="certIssueDate" class="block text-sm font-medium text-gray-700">Issue
+                      Date</label>
+                    <input type="date" id="certIssueDate" formControlName="issueDate"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="certExpiryDate" class="block text-sm font-medium text-gray-700">Expiry
+                      Date</label>
+                    <input type="date" id="certExpiryDate" formControlName="expiryDate"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="certAuthority" class="block text-sm font-medium text-gray-700">Issuing
+                      Authority</label>
+                    <input type="text" id="certAuthority" formControlName="authority"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="certLimitations" class="block text-sm font-medium text-gray-700">Limitations</label>
+                    <input type="text" id="certLimitations" formControlName="limitations"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label for="certCountry" class="block text-sm font-medium text-gray-700">Country</label>
+                    <input type="text" id="certCountry" formControlName="country"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end mt-4">
+                <button type="button" id="add-certificate-btn" (click)="addCertificate()"
+                  [disabled]="newCertificateGroup.invalid"
+                  class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                  Add Certificate
+                </button>
+              </div>
+
+              <div class="mt-6" formArrayName="certificates">
+                <h4 class="text-md font-medium text-gray-800 mb-2">Added Certificates</h4>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Capacity</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Regulation</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Issue Date</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Expiry Date</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Issuing
+                          Authority</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Limitations</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Country</th>
+                        <th class="px-4 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="certificates-table-body">
+                      <tr *ngFor="let control of certificatesArray.controls; let i = index" [formGroupName]="i">
+                        <td class="px-4 py-2">{{ control.get('capacity')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('regulation')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('issueDate')?.value | date }}</td>
+                        <td class="px-4 py-2">{{ control.get('expiryDate')?.value | date }}</td>
+                        <td class="px-4 py-2">{{ control.get('authority')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('limitations')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('country')?.value }}</td>
+
+                        <td class="px-4 py-2">
+                          <button type="button" (click)="removeCertificate(i)" class="text-red-600 hover:text-red-800"
+                            title="Remove Certificate">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                              fill="currentColor">
+                              <path fill-rule="evenodd"
+                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 10-2 0v6a1 1 0 102 0V8z"
+                                clip-rule="evenodd" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr *ngIf="certificatesArray.length === 0">
+                        <td colspan="9" class="text-center py-4 text-gray-500">No certificates
+                          added yet.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab==='DPCertificationLicense'" class="space-y-6">
+
+            <div [formGroup]="newDpLicenseGroup">
+              <h4 class="text-lg font-semibold text-gray-800 mb-4">Add New DP License</h4>
+
+              <div class="flex flex-wrap gap-x-6 gap-y-4 mb-6">
+                <label class="flex items-center"><input type="checkbox" formControlName="isBasic"
+                    class="mr-2">BASIC</label>
+                <label class="flex items-center"><input type="checkbox" formControlName="isAdv"
+                    class="mr-2">ADV.</label>
+                <label class="flex items-center"><input type="checkbox" formControlName="isFull" class="mr-2">DP
+                  Operator(FULL LICENCE)</label>
+                <label class="flex items-center"><input type="checkbox" formControlName="isEto" class="mr-2">ETO/DP
+                  MAINTENANCE</label>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                  <label for="dpCert" class="block text-sm font-medium text-gray-700">Certificate</label>
+                  <input type="text" id="dpCert" formControlName="dpCert"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                  <div *ngIf="newDpLicenseGroup.get('dpCert')?.invalid && newDpLicenseGroup.get('dpCert')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Certificate is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="dpCertNo" class="block text-sm font-medium text-gray-700">Certificate Number</label>
+                  <input type="text" id="dpCertNo" formControlName="dpCertNo"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="dpIssueDate" class="block text-sm font-medium text-gray-700">Issue Date</label>
+                  <input type="date" id="dpIssueDate" formControlName="dpIssueDate"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="dpExpiryDate" class="block text-sm font-medium text-gray-700">Expiry Date</label>
+                  <input type="date" id="dpExpiryDate" formControlName="dpExpiryDate"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="dpAuthority" class="block text-sm font-medium text-gray-700">Issuing Authority</label>
+                  <input type="text" id="dpAuthority" formControlName="dpAuthority"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="dpCountry" class="block text-sm font-medium text-gray-700">Country</label>
+                  <input type="text" id="dpCountry" formControlName="dpCountry"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div class="md:col-span-2">
+                  <div>
+                    <label for="dpLimitations" class="block text-sm font-medium text-gray-700">Limitations</label>
+                    <input type="text" id="dpLimitations" formControlName="dpLimitations"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                      placeholder="">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="button" (click)="addDpLicense()" id="add-dp-license-btn"
+                class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Add</button>
+            </div>
+
+            <div class="mt-6">
+              <h4 class="text-md font-medium text-gray-800 mb-2">Added DP Licenses ({{ dpLicensesArray.length }})</h4>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Type(s)</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Certificate</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Certificate Number</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Issue Date</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Expiry Date</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Issuing Authority</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Country</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Limitations</th>
+                      <th class="px-4 py-2 w-10"></th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="dpLicenses">
+                    <tr *ngFor="let licenseGroup of dpLicensesFormGroups; let i = index" [formGroup]="licenseGroup"
+                      class="border-b hover:bg-gray-50">
+                      <td class="px-4 py-2">
+                        {{ licenseGroup.get('dpType')?.value.join(', ') }}
+                      </td>
+                      <td class="px-4 py-2">{{ licenseGroup.get('dpCert')?.value }}</td>
+                      <td class="px-4 py-2">{{ licenseGroup.get('dpCertNo')?.value }}</td>
+                      <td class="px-4 py-2">{{ licenseGroup.get('dpIssueDate')?.value }}</td>
+                      <td class="px-4 py-2">{{ licenseGroup.get('dpExpiryDate')?.value }}</td>
+                      <td class="px-4 py-2">{{ licenseGroup.get('dpAuthority')?.value }}</td>
+                      <td class="px-4 py-2">{{ licenseGroup.get('dpCountry')?.value }}</td>
+                      <td class="px-4 py-2">{{ licenseGroup.get('dpLimitations')?.value }}</td>
+
+
+                      <td class="px-4 py-2">
+                        <button type="button" (click)="removeDpLicense(i)" class="text-red-500 hover:text-red-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 7a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1zm5 0a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1z"
+                              clip-rule="evenodd" />
+                          </svg>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div *ngIf="dpLicensesArray.length === 0" class="text-center py-4 text-gray-500">
+                  No DP Licenses added yet.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab==='stcw'" class="w-full overflow-y-auto custom-scrollbar">
+            <div *ngIf="activeTab==='stcw'" class="space-y-6">
+              <div [formGroup]="newStcwGroup">
+                <h4 class="text-lg font-semibold text-gray-800 mb-4">Add New Training/STCW</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                  <div>
+                    <label for="stcwName" class="block text-sm font-medium text-gray-700">Name Of Course</label>
+                    <input type="text" id="stcwName" formControlName="name"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                      placeholder="">
+                    <div *ngIf="newStcwGroup.get('name')?.invalid && newStcwGroup.get('name')?.touched"
+                      class="text-red-500 text-xs mt-1">
+                      Course Name is required.
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="stcwIssueDate" class="block text-sm font-medium text-gray-700">Issue Date</label>
+                    <input type="date" id="stcwIssueDate" formControlName="issueDate"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="stcwExpiryDate" class="block text-sm font-medium text-gray-700">Expiry Date</label>
+                    <input type="date" id="stcwExpiryDate" formControlName="expiryDate"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="stcwInstitute"
+                      class="block text-sm font-medium text-gray-700">Institute/Center/Country</label>
+                    <input type="text" id="stcwInstitute" formControlName="institute"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                      placeholder="">
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="flex justify-end">
+                <button type="button" (click)="addStcw()" id="add-stcw-btn"
+                  class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Add</button>
+              </div>
+
+              <div class="mt-6">
+                <h4 class="text-md font-medium text-gray-800 mb-2">Added Trainings ({{ stcwArray.length }})</h4>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Name Of Course</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Issue Date</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Expiry Date</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Institute/Center/Country</th>
+                        <th class="px-4 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="stcw">
+                      <tr *ngFor="let stcwGroup of stcwFormGroups; let i = index" [formGroup]="stcwGroup"
+                        class="border-b hover:bg-gray-50">
+                        <td class="px-4 py-2">{{ stcwGroup.get('name')?.value }}</td>
+                        <td class="px-4 py-2">{{ stcwGroup.get('issueDate')?.value }}</td>
+                        <td class="px-4 py-2">{{ stcwGroup.get('expiryDate')?.value }}</td>
+                        <td class="px-4 py-2">{{ stcwGroup.get('institute')?.value }}</td>
+
+
+                        <td class="px-4 py-2">
+                          <button type="button" (click)="removeStcw(i)" class="text-red-500 hover:text-red-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                              fill="currentColor">
+                              <path fill-rule="evenodd"
+                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 7a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1zm5 0a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1z"
+                                clip-rule="evenodd" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div *ngIf="stcwArray.length === 0" class="text-center py-4 text-gray-500">
+                    No trainings added yet.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="activeTab==='languages'" class="w-full overflow-y-auto custom-scrollbar">
+            <div class="space-y-6">
+
+              <div [formGroup]="newLanguageGroup">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                  <div>
+                    <label for="langLanguage" class="block text-sm font-medium text-gray-700">Language
+                    </label>
+                    <input type="text" id="langLanguage" formControlName="language"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+
+                  <div>
+                    <label for="langSpoken" class="block text-sm font-medium text-gray-700">Spoken</label>
+                    <input type="text" id="langSpoken" formControlName="spoken"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+                  <div>
+                    <label for="langWritten" class="block text-sm font-medium text-gray-700">Written</label>
+                    <input type="text" id="langWritten" formControlName="written"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+
+                  <div>
+                    <label for="langUnderstood" class="block text-sm font-medium text-gray-700">Understood</label>
+                    <input type="text" id="langUnderstood" formControlName="understood"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                  </div>
+
+
+                  <div class="md:col-span-2">
+                    <label for="langMotherTongue" class="block text-sm font-medium text-gray-700">Mother
+                      Tongue (Type in or Check)</label>
+                    <input type="text" id="langMotherTongue" formControlName="motherTongue"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="">
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end mt-4">
+                <button type="button" id="add-language-btn" (click)="addLanguage()"
+                  [disabled]="newLanguageGroup.invalid"
+                  class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                  Add Language
+                </button>
+              </div>
+
+              <div class="mt-6" formArrayName="languages">
+                <h4 class="text-md font-medium text-gray-800 mb-2">Added Languages</h4>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Language</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Spoken</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Written</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Understood</th>
+                        <th class="px-4 py-2 text-left font-medium text-gray-600">Mother Tongue
+                        </th>
+                        <th class="px-4 py-2 w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="languages-table-body">
+                      <tr *ngFor="let control of languagesArray.controls; let i = index" [formGroupName]="i">
+                        <td class="px-4 py-2">{{ control.get('language')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('spoken')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('written')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('understood')?.value }}</td>
+                        <td class="px-4 py-2">{{ control.get('motherTongue')?.value }}</td>
+                        <td class="px-4 py-2">
+                          <button type="button" (click)="removeLanguage(i)" class="text-red-600 hover:text-red-800"
+                            title="Remove Language">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                              fill="currentColor">
+                              <path fill-rule="evenodd"
+                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 10-2 0v6a1 1 0 102 0V8z"
+                                clip-rule="evenodd" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr *ngIf="languagesArray.length === 0">
+                        <td colspan="6" class="text-center py-4 text-gray-500">No languages added
+                          yet.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab==='workExperience'" class="space-y-6">
+
+            <div [formGroup]="newWorkExperienceGroup">
+              <h4 class="text-lg font-semibold text-gray-800 mb-4">Add New Work Experience</h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <div>
+                  <label for="expVesselName" class="block text-sm font-medium text-gray-700">Vessel Name</label>
+                  <input type="text" id="expVesselName" formControlName="vesselName"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                  <div
+                    *ngIf="newWorkExperienceGroup.get('vesselName')?.invalid && newWorkExperienceGroup.get('vesselName')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Vessel Name is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="expVesselType" class="block text-sm font-medium text-gray-700">Vessel Type</label>
+                  <input type="text" id="expVesselType" formControlName="vesselType"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="expRank" class="block text-sm font-medium text-gray-700">Rank</label>
+                  <input type="text" id="expRank" formControlName="rank"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                  <div
+                    *ngIf="newWorkExperienceGroup.get('rank')?.invalid && newWorkExperienceGroup.get('rank')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Rank is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="expCompany" class="block text-sm font-medium text-gray-700">Company Name</label>
+                  <input type="text" id="expCompany" formControlName="company"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="expFrom" class="block text-sm font-medium text-gray-700">From</label>
+                  <input type="date" id="expFrom" formControlName="from"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="expTo" class="block text-sm font-medium text-gray-700">To</label>
+                  <input type="date" id="expTo" formControlName="to"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="expGrt" class="block text-sm font-medium text-gray-700">GRT</label>
+                  <input type="text" id="expGrt" formControlName="grt"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+                <div>
+                  <label for="expBhp" class="block text-sm font-medium text-gray-700">BHP</label>
+                  <input type="text" id="expBhp" formControlName="bhp"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="">
+                </div>
+
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="button" (click)="addWorkExperience()" id="add-work-experience-btn"
+                class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Add</button>
+            </div>
+
+            <div class="mt-6">
+              <h4 class="text-md font-medium text-gray-800 mb-2">Added Work Experience
+                ({{ workExperienceArray.length }})</h4>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Vessel Name</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Vessel Type</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Rank</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">From</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">To</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">GRT</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">BHP</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Company Name</th>
+                      <th class="px-4 py-2 w-10"></th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="workExperience" id="work-experience-table-body">
+                    <tr *ngFor="let expGroup of workExperienceFormGroups; let i = index" [formGroup]="expGroup"
+                      class="border-b hover:bg-gray-50">
+                      <td class="px-4 py-2">{{ expGroup.get('vesselName')?.value }}</td>
+                      <td class="px-4 py-2">{{ expGroup.get('vesselType')?.value }}</td>
+                      <td class="px-4 py-2">{{ expGroup.get('rank')?.value }}</td>
+                      <td class="px-4 py-2">{{ expGroup.get('from')?.value }}</td>
+                      <td class="px-4 py-2">{{ expGroup.get('to')?.value }}</td>
+                      <td class="px-4 py-2">{{ expGroup.get('grt')?.value }}</td>
+                      <td class="px-4 py-2">{{ expGroup.get('bhp')?.value }}</td>
+                      <td class="px-4 py-2">{{ expGroup.get('company')?.value }}</td>
+
+                      <td class="px-4 py-2">
+                        <button type="button" (click)="removeWorkExperience(i)" class="text-red-500 hover:text-red-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 7a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1zm5 0a1 1 0 011 1v7a1 1 0 11-2 0V8a1 1 0 011-1z"
+                              clip-rule="evenodd" />
+                          </svg>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div *ngIf="workExperienceArray.length === 0" class="text-center py-4 text-gray-500">
+                  No work experience added yet.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab==='health'" [formGroup]="healthForm" class="space-y-6">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">Medical Declaration</h4>
+
+            <div class="p-4 border rounded-md bg-white">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Have you ever signed off from a ship due to
+                medical reason?</label>
+              <div class="mt-2 flex items-center">
+                <input type="checkbox" id="signedOffCheckbox" formControlName="signedOffFromAShipDueToMedicalReason"
+                  class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label for="signedOffCheckbox" class="ml-2 block text-sm text-gray-900">If Yes, details:</label>
+              </div>
+              <textarea formControlName="signedOffFromAShipDueToMedicalReasonComment" rows="2"
+                class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                [ngClass]="{'hidden': !healthForm.get('signedOffFromAShipDueToMedicalReason')?.value}"></textarea>
+            </div>
+
+            <div class="p-4 border rounded-md bg-white">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Have you ever undergone any medical
+                operation(s) in the past?</label>
+              <div class="mt-2 flex items-center">
+                <input type="checkbox" id="operationCheckbox" formControlName="undergoneMedicalOperation"
+                  class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label for="operationCheckbox" class="ml-2 block text-sm text-gray-900">If Yes, details:</label>
+              </div>
+              <textarea formControlName="medicalOperationDetails" rows="2"
+                class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                [ngClass]="{'hidden': !healthForm.get('undergoneMedicalOperation')?.value}"></textarea>
+            </div>
+
+            <div class="p-4 border rounded-md bg-white">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Have you consulted a doctor during past 12
+                months for any illness / accident?</label>
+              <div class="mt-2 flex items-center">
+                <input type="checkbox" id="consultedDoctorCheckbox" formControlName="consultedDoctorLast12Months"
+                  class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label for="consultedDoctorCheckbox" class="ml-2 block text-sm text-gray-900">If Yes, details:</label>
+              </div>
+              <textarea formControlName="consultedDoctorDetails" rows="2"
+                class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                [ngClass]="{'hidden': !healthForm.get('consultedDoctorLast12Months')?.value}"></textarea>
+            </div>
+
+            <div class="p-4 border rounded-md bg-white">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Do you have any health or disability problem
+                now?</label>
+              <div class="mt-2 flex items-center">
+                <input type="checkbox" id="disabilityCheckbox" formControlName="hasHealthOrDisabilityProblem"
+                  class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label for="disabilityCheckbox" class="ml-2 block text-sm text-gray-900">If Yes, details:</label>
+              </div>
+              <textarea formControlName="disabilityDetails" rows="2"
+                class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                [ngClass]="{'hidden': !healthForm.get('hasHealthOrDisabilityProblem')?.value}"></textarea>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab==='Payroll'" [formGroup]="salaryForm" class="space-y-6">
+            <div class="border-b pb-6">
+              <h3 class="text-lg font-medium leading-6 text-gray-900">Salary Elements</h3>
+              <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <div>
+                  <label for="employeeSalary" class="block text-sm font-medium text-gray-700">Employee Salary</label>
+                  <input type="number" id="employeeSalary" formControlName="employeeSalary"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="0.00" required>
+                  <div *ngIf="salaryForm.get('employeeSalary')?.invalid && salaryForm.get('employeeSalary')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Employee Salary is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="dailyPay" class="block text-sm font-medium text-gray-700">Daily Pay</label>
+                  <input type="number" id="dailyPay" formControlName="dailyPay"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="0.00" required>
+                  <div *ngIf="salaryForm.get('dailyPay')?.invalid && salaryForm.get('dailyPay')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Daily Pay is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="hourPay" class="block text-sm font-medium text-gray-700">Hour Pay</label>
+                  <input type="number" id="hourPay" formControlName="hourPay"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="0.00" required>
+                  <div *ngIf="salaryForm.get('hourPay')?.invalid && salaryForm.get('hourPay')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Hour Pay is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="delayHourPay" class="block text-sm font-medium text-gray-700">Delay Hour Pay</label>
+                  <input type="number" id="delayHourPay" formControlName="delayHourPay"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="0.00" required>
+                  <div *ngIf="salaryForm.get('delayHourPay')?.invalid && salaryForm.get('delayHourPay')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Delay Hour Pay is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="overtimeHourPay" class="block text-sm font-medium text-gray-700">Overtime Hour
+                    Pay</label>
+                  <input type="number" id="overtimeHourPay" formControlName="overtimeHourPay"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="0.00" required>
+                  <div *ngIf="salaryForm.get('overtimeHourPay')?.invalid && salaryForm.get('overtimeHourPay')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Overtime Hour Pay is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
+                  <select id="currency" formControlName="currency"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    required>
+                    <option value="" disabled selected>Select Currency</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="AED">AED</option>
+                  </select>
+                  <div *ngIf="salaryForm.get('currency')?.invalid && salaryForm.get('currency')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Currency is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="paymentWay" class="block text-sm font-medium text-gray-700">Payment Way</label>
+                  <select id="paymentWay" formControlName="paymentWay"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    required>
+                    <option value="" disabled selected>Select Payment Way</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                  </select>
+                  <div *ngIf="salaryForm.get('paymentWay')?.invalid && salaryForm.get('paymentWay')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Payment Way is required.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t">
+              <div>
+                <span class="font-medium">Total Earning:</span>
+                <span class="font-bold">{{ salaryForm.get('totalEarning')?.value }}
+                  {{ salaryForm.get('currency')?.value }}</span>
+              </div>
+              <div>
+                <span class="font-medium">Total Deduction:</span>
+                <span class="font-bold">{{ salaryForm.get('totalDeduction')?.value }}
+                  {{ salaryForm.get('currency')?.value }}</span>
+              </div>
+              <div>
+                <span class="font-medium">Net Salary:</span>
+                <span class="font-bold">{{ salaryForm.get('netSalary')?.value }}
+                  {{ salaryForm.get('currency')?.value }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeTab==='professionalHistory'" [formGroup]="professionalHistoryForm" class="space-y-6">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">Professional & Legal Declaration</h4>
+
+            <div class="p-4 border rounded-md bg-white">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Have you ever been the subject of a court of
+                enquiry or involved in a maritime accident?</label>
+              <div class="mt-2 flex items-center">
+                <input type="checkbox" id="courtEnquiryCheckbox" formControlName="courtOfEnquiryOrAccident"
+                  class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label for="courtEnquiryCheckbox" class="ml-2 block text-sm text-gray-900">If Yes, details:</label>
+              </div>
+              <textarea id="courtEnquiryDetails" formControlName="courtOfEnquiryOrAccidentDetails" rows="2"
+                class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                [ngClass]="{'hidden': !professionalHistoryForm.get('courtOfEnquiryOrAccident')?.value}"></textarea>
+            </div>
+
+            <div class="p-4 border rounded-md bg-white">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Have you ever had a professional license
+                suspended or revoked?</label>
+              <div class="mt-2 flex items-center">
+                <input type="checkbox" id="licenseSuspendedCheckbox" formControlName="licenseSuspendedOrRevoked"
+                  class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <label for="licenseSuspendedCheckbox" class="ml-2 block text-sm text-gray-900">If Yes, details:</label>
+              </div>
+              <textarea id="licenseSuspendedDetails" formControlName="licenseSuspendedOrRevokedDetails" rows="2"
+                class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                [ngClass]="{'hidden': !professionalHistoryForm.get('licenseSuspendedOrRevoked')?.value}"></textarea>
+            </div>
+          </div>
+          <div *ngIf="activeTab==='references'" class="space-y-6">
+            <h4 class="text-lg font-semibold text-gray-800 mb-4">Professional References</h4>
+
+            <div [formGroup]="referenceInputGroup" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                  <label for="refName" class="block text-sm font-medium text-gray-700">Name Of Person</label>
+                  <input type="text" id="refName" formControlName="refName"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Contact Name">
+                  <div
+                    *ngIf="referenceInputGroup.get('refName')?.invalid && referenceInputGroup.get('refName')?.touched"
+                    class="text-red-500 text-xs mt-1">
+                    Name is required.
+                  </div>
+                </div>
+
+                <div>
+                  <label for="refCompany" class="block text-sm font-medium text-gray-700">Company Name</label>
+                  <input type="text" id="refCompany" formControlName="refCompany"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Company">
+                </div>
+
+                <div>
+                  <label for="refCountry" class="block text-sm font-medium text-gray-700">Country</label>
+                  <input type="text" id="refCountry" formControlName="refCountry"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Country">
+                </div>
+
+                <div>
+                  <label for="refTelFax" class="block text-sm font-medium text-gray-700">TEL /FAX NO.</label>
+                  <input type="text" id="refTelFax" formControlName="refTelFax"
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Phone/Fax">
+                </div>
+
+                <div class="md:col-span-2">
+                  <div>
+                    <label for="refEmail" class="block text-sm font-medium text-gray-700">Email Id.</label>
+                    <input type="text" id="refEmail" formControlName="refEmail"
+                      class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="email@example.com">
+                    <div
+                      *ngIf="referenceInputGroup.get('refEmail')?.invalid && referenceInputGroup.get('refEmail')?.touched"
+                      class="text-red-500 text-xs mt-1">
+                      A valid email is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end">
+                <button type="button" (click)="addReference()" [disabled]="!referenceInputGroup.valid"
+                  class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 disabled:bg-gray-400 transition duration-150 ease-in-out">
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-6" [formGroup]="referencesForm">
+              <h4 class="text-md font-medium text-gray-800 mb-2">Added References</h4>
+
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Name Of Person</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Company Name</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Country</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">TEL /FAX NO.</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-600">Email Id.</th>
+                      <th class="px-4 py-2 w-10"></th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="references">
+                    <tr *ngFor="let reference of referencesArray.controls; let i = index" [formGroupName]="i"
+                      class="border-t hover:bg-gray-50">
+                      <td class="px-4 py-2">{{ reference.get('refName')?.value }}</td>
+                      <td class="px-4 py-2">{{ reference.get('refCompany')?.value }}</td>
+                      <td class="px-4 py-2">{{ reference.get('refCountry')?.value }}</td>
+                      <td class="px-4 py-2">{{ reference.get('refTelFax')?.value }}</td>
+                      <td class="px-4 py-2">{{ reference.get('refEmail')?.value }}</td>
+                      <td class="px-4 py-2">
+                        <button type="button" (click)="removeReference(i)" title="Remove Reference"
+                          class="text-red-600 hover:text-red-800 transition duration-150 ease-in-out">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                            </path>
+                          </svg>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="p-4 border-t flex justify-end">
+      <button type="submit" [disabled]="seafarerForm.invalid"
+        class="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-400"
+        (click)="saveSeafarerData()">
+        Save Seafarer
+      </button>
+    </div>
+
+  </div>
+</div>
